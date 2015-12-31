@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<playground version='6.0' target-platform='osx' executeOnSourceChanges='false'>
+    <pages>
+        <page name='Language'/>
+        <page name='Combination'/>
+        <page name='Date Time'/>
+        <page name='SpriteKit Charting'/>
+    </pages>
+</playground>
