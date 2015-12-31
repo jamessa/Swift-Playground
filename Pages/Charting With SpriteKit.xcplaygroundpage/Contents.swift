@@ -1,9 +1,11 @@
+//: This is a demo drawing out history using weight and rep based on Joule to view training progress quickly.
+
 import SpriteKit
 import XCPlayground
 
 struct Record {
     var date: NSDate
-    var set: Int
+    var rep: Int
     var kg: Double
     var lb: Double
 }
@@ -24,7 +26,7 @@ for var line in lines {
     if ( rows.count>3 && rows[3] == "Bench Press") {
         let d = dateFormatter.dateFromString(rows[0])!
 
-        let r = Record(date: d, set: Int(rows[6])!, kg: Double(rows[9])!, lb: Double(rows[10])!)
+        let r = Record(date: d, rep: Int(rows[6])!, kg: Double(rows[9])!, lb: Double(rows[10])!)
         benchPress.append(r)
     }
 }
@@ -41,7 +43,7 @@ var currentDate = NSDate();
 var x:Int = 0
 let offset = 10
 for b in benchPress {
-    var bar = SKSpriteNode(color: NSColor.whiteColor(), size: CGSize(width: Double(b.set), height: b.lb))
+    var bar = SKSpriteNode(color: NSColor.whiteColor(), size: CGSize(width: Double(b.rep), height: b.lb))
     
     if currentDate != b.date {
         x = x + offset
@@ -49,7 +51,7 @@ for b in benchPress {
     }
     bar.anchorPoint = CGPoint(x: 0, y: 0)
     bar.position = CGPoint(x: x, y: 100)
-    x = x+2+b.set
+    x = x+2+b.rep
     scene.addChild(bar)
     
 }

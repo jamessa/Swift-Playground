@@ -4,6 +4,6 @@
         <page name='Language'/>
         <page name='Combination'/>
         <page name='Date Time'/>
-        <page name='SpriteKit Charting'/>
+        <page name='Charting With SpriteKit'/>
     </pages>
 </playground>
