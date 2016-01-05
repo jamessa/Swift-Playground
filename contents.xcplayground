@@ -5,5 +5,7 @@
         <page name='Combination'/>
         <page name='Date Time'/>
         <page name='Charting With SpriteKit'/>
+        <page name='Fourier Transform'/>
+        <page name='DFT'/>
     </pages>
 </playground>
