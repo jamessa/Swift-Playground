@@ -12,23 +12,42 @@ func plot<T>(values: [T], title: String) {
     }
 }
 
+func plot(real: [Float], imaginary: [Float], title: String) {
+    for (index, r) in real.enumerate() {
+        let i = imaginary[index]
+        XCPlaygroundPage.currentPage.captureValue(r*r+i*i, withIdentifier: title)
+    }
+}
+
 // Time Domain to Freqency Domain
-let real:[Float] = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0, 11.0, 12.0, 13.0, 14.0, 15.0, 16.0]
+let real:[Float] = [1.0, 2.0, 1.0, 2.0]
 
 plot(real, title: "Time Domain")
 let imaginary = [Float](count:real.count, repeatedValue: 0.0)
 
-var real_output = [Float](count:real.count, repeatedValue: 0.0)
-var imaginary_output = [Float](count:real.count, repeatedValue: 0.0)
+var real_frequency = [Float](count:real.count, repeatedValue: 0.0)
+var imaginary_frequency = [Float](count:real.count, repeatedValue: 0.0)
 
 let length = vDSP_Length(real.count)
 
 
-let weights = vDSP_DFT_zop_CreateSetup(nil, length, vDSP_DFT_Direction.FORWARD)
+let forward = vDSP_DFT_zop_CreateSetup(nil, length, vDSP_DFT_Direction.FORWARD)
 
-vDSP_DFT_Execute(weights, real, imaginary, &real_output, &imaginary_output)
+vDSP_DFT_Execute(forward, real, imaginary, &real_frequency, &imaginary_frequency)
 
-for (i, r) in real_output.enumerate() {
-    print("\(r) \(imaginary_output[i])i")
-    XCPlaygroundPage.currentPage.captureValue(r*r+imaginary_output[i]*imaginary_output[i], withIdentifier: "Freqency Domain")
-}
+plot(real_frequency, imaginary:imaginary_frequency, title: "Frequency Domain")
+
+vDSP_DFT_DestroySetup(forward)
+
+// Frequency Domain to Time Domain
+
+let inverse = vDSP_DFT_zop_CreateSetup(nil, length, vDSP_DFT_Direction.INVERSE)
+
+var real_time = [Float](count:real.count, repeatedValue: 0.0)
+var imaginary_time = [Float](count:real.count, repeatedValue: 0.0)
+
+vDSP_DFT_Execute(inverse, real_frequency, imaginary_frequency, &real_time, &imaginary_time)
+
+plot(real_time, imaginary:imaginary_time, title: "Back to Time Domain")
+
+vDSP_DFT_DestroySetup(inverse)
