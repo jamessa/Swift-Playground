@@ -7,5 +7,6 @@
         <page name='Charting With SpriteKit'/>
         <page name='Fourier Transform'/>
         <page name='DFT'/>
+        <page name='Interacting with C Pointers'/>
     </pages>
 </playground>
