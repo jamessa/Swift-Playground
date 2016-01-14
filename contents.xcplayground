@@ -3,9 +3,11 @@
     <pages>
         <page name='Interacting with C Pointers'/>
         <page name='DFT'/>
+        <page name='Accelerate'/>
         <page name='Fourier Transform'/>
         <page name='Combination'/>
         <page name='Date Time'/>
         <page name='Charting With SpriteKit'/>
+        <page name='Self'/>
     </pages>
 </playground>
