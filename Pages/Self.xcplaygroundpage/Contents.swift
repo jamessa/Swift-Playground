@@ -1,9 +1,17 @@
 import Foundation
+import AppKit
 
-let object = NSObject()
+//: Find object type
+// NS or UI prefix work for classForCoder()
+NSObject.self // NSObject.Type
+NSObject.classForCoder() // Mystry
 
-object.classForCoder
+NSColor.self
+NSColor.classForCoder()
 
-object.self
-
+// Foundamental types
+String.self
+// String.classForCoder()   // this didn't work.
 Int.self
+// Int.classForCoder()      // this didn't work too.
+
