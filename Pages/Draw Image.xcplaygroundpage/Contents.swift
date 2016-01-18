@@ -1,5 +1,9 @@
 import AppKit
 
+// Choose the right drawing technology
+// https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/CocoaDrawingGuide/QuartzOpenGL/QuartzOpenGL.html#//apple_ref/doc/uid/TP40003290-CH211-SW2
+
+
 // Draw in CoreGraphics
 func DrawImageInCGContext(size: CGSize, drawFunc: (context: CGContextRef) -> ()) -> NSImage {
     let colorSpace = CGColorSpaceCreateDeviceRGB()
@@ -35,6 +39,7 @@ func DrawImageInNSGraphicsContext(size: CGSize, drawFunc: ()->()) -> NSImage {
     
     let context = NSGraphicsContext(bitmapImageRep: rep!)
     
+    
     NSGraphicsContext.saveGraphicsState()
     NSGraphicsContext.setCurrentContext(context)
     
@@ -48,14 +53,17 @@ func DrawImageInNSGraphicsContext(size: CGSize, drawFunc: ()->()) -> NSImage {
     return image
 }
 
-let rect = CGRectMake(0, 0, 100, 20)
+let rect = CGRectMake(0, 0, 255, 255)
 
 let image1 = DrawImageInCGContext(rect.size) { (context) -> () in
     CGContextSetFillColorWithColor(context, NSColor.redColor().CGColor)
     CGContextFillRect(context, rect);
+    
 }
+
 
 let image2 = DrawImageInNSGraphicsContext(rect.size) { () -> () in
     NSColor.blueColor().set()
     NSRectFill(rect)
+    
 }
