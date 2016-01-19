@@ -25,7 +25,7 @@ var ioNumberFrames:UInt32 = 128
 var ioData = AudioBufferList()
 
 let readFrameSize:UInt32 = 100
-let bufferByteSize = UInt32(sizeof(UInt8)) * readFrameSize * format.mBytesPerFrame
+let bufferByteSize = format.mBytesPerPacket * readFrameSize * format.mBytesPerFrame
 var buffer = UnsafeMutablePointer<Void>.alloc( Int(bufferByteSize) )
 defer { buffer.dealloc(Int(bufferByteSize)) }
 
@@ -44,12 +44,8 @@ print(ioData)
 
 print(ioData.mBuffers.mData[0])
 
-var IntPtr: UnsafeMutablePointer<UInt8> = unsafeBitCast(ioData.mBuffers.mData, UnsafeMutablePointer<UInt8>.self)
+var IntPtr: UnsafeMutablePointer<UInt16> = unsafeBitCast(ioData.mBuffers.mData, UnsafeMutablePointer<UInt16>.self)
 
 for var i in 0..<ioNumberFrames {
     XCPlaygroundPage.currentPage.captureValue(IntPtr[Int(i)], withIdentifier: "Raw Wave")
-}
-
-for var i in 1..<ioNumberFrames/2 {
-    XCPlaygroundPage.currentPage.captureValue(IntPtr[Int(i*2+1)], withIdentifier: "Wave")
 }
