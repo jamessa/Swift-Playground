@@ -25,7 +25,7 @@ var ioNumberFrames:UInt32 = 128
 var ioData = AudioBufferList()
 
 let readFrameSize:UInt32 = 100
-let bufferByteSize = format.mBytesPerPacket * readFrameSize * format.mBytesPerFrame
+let bufferByteSize = format.mBytesPerFrame * readFrameSize * format.mBytesPerFrame
 var buffer = UnsafeMutablePointer<Void>.alloc( Int(bufferByteSize) )
 defer { buffer.dealloc(Int(bufferByteSize)) }
 
