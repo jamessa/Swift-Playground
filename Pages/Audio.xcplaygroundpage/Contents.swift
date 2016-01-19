@@ -1,3 +1,5 @@
+//: Extended Audio File Services provides simplified audio file access, combining features of Audio File Services and Audio Converter Services. It provides a unified interface for reading and writing compressed as well as linear PCM audio files.
+
 import AudioToolbox
 import Darwin
 import Swift
@@ -43,8 +45,9 @@ print(readStatus)
 print(ioNumberFrames)
 print(ioData)
 
-// Breaks the guarantees of Swift's type system; use with extreme care. There's almost always a better way to do anything.
+//: Breaks the guarantees of Swift's type system; use with extreme care. There's almost always a better way to do anything.
 var IntPtr: UnsafeMutablePointer<Int16> = unsafeBitCast(ioData.mBuffers.mData, UnsafeMutablePointer<Int16>.self)
+
 
 for var i in 0..<ioNumberFrames {
     XCPlaygroundPage.currentPage.captureValue(IntPtr[Int(i)], withIdentifier: "Raw Wave")
