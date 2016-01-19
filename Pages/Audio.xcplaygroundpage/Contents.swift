@@ -44,7 +44,7 @@ print(ioData)
 
 print(ioData.mBuffers.mData[0])
 
-var IntPtr: UnsafeMutablePointer<UInt16> = unsafeBitCast(ioData.mBuffers.mData, UnsafeMutablePointer<UInt16>.self)
+var IntPtr: UnsafeMutablePointer<Int16> = unsafeBitCast(ioData.mBuffers.mData, UnsafeMutablePointer<Int16>.self)
 
 for var i in 0..<ioNumberFrames {
     XCPlaygroundPage.currentPage.captureValue(IntPtr[Int(i)], withIdentifier: "Raw Wave")
