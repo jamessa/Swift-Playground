@@ -15,6 +15,7 @@ ExtAudioFileGetProperty(audioFileRef, kExtAudioFileProperty_FileLengthFrames, &i
 print("Frame Size : \(frameSize)")
 
 
+
 var format = AudioStreamBasicDescription()
 var size:UInt32 = UInt32(sizeof(AudioStreamBasicDescription))
 ExtAudioFileGetProperty(audioFileRef, kExtAudioFileProperty_FileDataFormat, &size, &format)
@@ -41,8 +42,6 @@ let readStatus = ExtAudioFileRead(audioFileRef, &ioNumberFrames, &ioData)
 print(readStatus)
 print(ioNumberFrames)
 print(ioData)
-
-print(ioData.mBuffers.mData[0])
 
 // Breaks the guarantees of Swift's type system; use with extreme care. There's almost always a better way to do anything.
 var IntPtr: UnsafeMutablePointer<Int16> = unsafeBitCast(ioData.mBuffers.mData, UnsafeMutablePointer<Int16>.self)
