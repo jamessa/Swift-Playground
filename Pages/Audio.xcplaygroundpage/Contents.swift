@@ -24,10 +24,10 @@ ExtAudioFileGetProperty(audioFileRef, kExtAudioFileProperty_FileDataFormat, &siz
 
 format
 
-var ioNumberFrames:UInt32 = 128
+var ioNumberFrames:UInt32 = 1024
 var ioData = AudioBufferList()
 
-let readFrameSize:UInt32 = 51
+let readFrameSize:UInt32 = 1024
 let bufferByteSize = format.mBytesPerFrame * readFrameSize * format.mBytesPerFrame
 var buffer = UnsafeMutablePointer<Void>.alloc( Int(bufferByteSize) )
 defer { buffer.dealloc(Int(bufferByteSize)) }
@@ -52,3 +52,41 @@ var IntPtr: UnsafeMutablePointer<Int16> = unsafeBitCast(ioData.mBuffers.mData, U
 for var i in 0..<ioNumberFrames {
     XCPlaygroundPage.currentPage.captureValue(IntPtr[Int(i)], withIdentifier: "Raw Wave")
 }
+
+//: FFT
+import Accelerate
+// Playground Helper
+func plot<T>(values: [T], title: String) {
+    for value in values {
+        XCPlaygroundPage.currentPage.captureValue(value, withIdentifier: title)
+    }
+}
+
+func plot(real: [Float], imaginary: [Float], title: String) {
+    for (index, r) in real.enumerate() {
+        let i = imaginary[index]
+        XCPlaygroundPage.currentPage.captureValue(r*r+i*i, withIdentifier: title)
+    }
+}
+
+// Time Domain to Freqency Domain
+var real = [Float](count: 1024, repeatedValue: 0.0)
+vDSP_vflt16(IntPtr, 1, &real, 1, 1024)
+
+
+plot(real, title: "Time Domain")
+let imaginary = [Float](count:real.count, repeatedValue: 0.0)
+
+var real_frequency = [Float](count:real.count, repeatedValue: 0.0)
+var imaginary_frequency = [Float](count:real.count, repeatedValue: 0.0)
+
+let length = vDSP_Length(real.count)
+
+let forward = vDSP_DFT_zop_CreateSetup(nil, length, vDSP_DFT_Direction.FORWARD)
+
+vDSP_DFT_Execute(forward, real, imaginary, &real_frequency, &imaginary_frequency)
+
+plot(real_frequency, imaginary:imaginary_frequency, title: "Frequency Domain")
+
+vDSP_DFT_DestroySetup(forward)
+
