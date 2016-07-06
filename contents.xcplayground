@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='6.0' target-platform='osx' display-mode='raw' executeOnSourceChanges='false'>
+<playground version='6.0' target-platform='ios' display-mode='raw' executeOnSourceChanges='false'>
     <pages>
+        <page name='SceneKit Background Test with Portrait'/>
+        <page name='SceneKit Background Test with Square'/>
         <page name='Interacting with C Pointers'/>
         <page name='DFT'/>
         <page name='Accelerate'/>
@@ -11,5 +13,6 @@
         <page name='Self'/>
         <page name='Bitmap Informations'/>
         <page name='Draw Image'/>
+        <page name='Audio'/>
     </pages>
 </playground>
